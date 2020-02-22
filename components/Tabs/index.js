@@ -25,7 +25,7 @@ axios
       let newTopicTab = tabComponent(response);
       topicsTab.appendChild(newTopicTab);
     });
-    console.log(response.data);
+    // console.log(response.data);
   })
   .catch(err => {
     console.log(err);

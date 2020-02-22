@@ -18,39 +18,46 @@
 //
 // Create a card for each of the articles and add the card to the DOM.
 
-// function articleComponent() {
-//     const card = document.createElement('div');
-//     card.classList.add('card');
+function articleComponent(articles) {
+  const card = document.createElement("div");
+  card.classList.add("card");
 
-//     const headline = document.createElement('div');
-//     headline.classList.add('headline');
-//     headline.textContent = `${}`;
-//     card.appendChild(headline);
+  const headline = document.createElement("div");
+  headline.classList.add("headline");
+  headline.textContent = `${articles.headline}`;
+  card.appendChild(headline);
 
-//     const author = document.createElement('div');
-//     author.classList.add('author');
-//     card.appendChild(author);
+  const author = document.createElement("div");
+  author.classList.add("author");
+  card.appendChild(author);
 
-//     const imgContainer = document.createElement('div');
-//     imgContainer.classList.add('img-container');
-//     author.appendChild(imgContainer);
+  const imgContainer = document.createElement("div");
+  imgContainer.classList.add("img-container");
+  author.appendChild(imgContainer);
 
-//     const newImage = document.createElement('img');
-//     newImage.src =
-//     imgContainer.appendChild(newImage);
+  const newImage = document.createElement("img");
+  newImage.src = `${articles.authorPhoto}`;
+  imgContainer.appendChild(newImage);
 
-//     const authorsName = document.createElement('span');
-//     authorsName.textContent = `By ${}`;
-//     author.appendChild(authorsName);
+  const authorsName = document.createElement("span");
+  authorsName.textContent = `By ${articles.authorName}`;
+  author.appendChild(authorsName);
 
-//     return card;
-// }
+  return card;
+}
 
-// const cardsContainer = document.querySelector('.cards-container');
+const cardsContainer = document.querySelector(".cards-container");
 
 axios
   .get("https://lambda-times-backend.herokuapp.com/articles")
   .then(response => {
+    for (const topic in response.data.articles) {
+      console.log(response.data.articles[topic]);
+      response.data.articles[topic].forEach(response => {
+        let newArticle = articleComponent(response);
+        cardsContainer.appendChild(newArticle);
+      });
+    }
     console.log(response.data);
   })
   .catch(err => {
